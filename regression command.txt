@@ -1,0 +1,12 @@
+regress:
+	vlib work
+	vlog -coveropt 3 +acc +cover ..\RTL\rr_arbiter_rtl.v ..\TB\rr_arbiter_tb.v
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a1.ucdb; run -all; exit" +RST_TEST
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a2.ucdb; run -all; exit" +IDLE_TEST
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a3.ucdb; run -all; exit" +S0_TEST
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a4.ucdb; run -all; exit" +S1_TEST
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a5.ucdb; run -all; exit" +S2_TEST
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a6.ucdb; run -all; exit" +S3_TEST
+	vsim -vopt -coverage rr_arbiter_tb -c -do "coverage save -onexit -directive -cvg -codeall a7.ucdb; run -all; exit" +ALL_TEST
+	vcover merge combine_cov.ucdb a1.ucdb a2.ucdb a3.ucdb a4.ucdb a5.ucdb a6.ucdb a7.ucdb
+	vcover report -html combine_cov.ucdb
